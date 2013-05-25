@@ -1,0 +1,34 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4598
+
+Rainbow CSV provides a way to highlight logical columns in different rainbow 
+colors. This helps to understand data patterns in csv, tsv, etc files more 
+quickly, especially when fields in the same column have different lengths. Every
+10-th column has a default font color, so it's easy to find out column numbers
+
+Screenshots:
+http://img-fotki.yandex.ru/get/9153/15987922.0/0_f4fc0_bc89d2ee_XXXL.png
+http://img-fotki.yandex.ru/get/6706/15987922.0/0_f4fbc_45554305_XXXL.png
+
+
+There are 2 ways to enable csv columns highlighting:
+        1. CSV autodetection based on buffer content
+        2. Manual CSV delimiter selection
+
+When new buffer is opened Rainbow CSV analyzes it's content and tries to
+autodect whether it is a csv file or not; and if it is, what character this
+csv is delimited by. This would work only if no other syntax rules has been
+set for buffer. Buffer's file extension is irrelevant for autodetection, there
+can be no extension at all or a buffer content could be read by vim from stdin -
+autodetection would work in any case.
+
+If autodetection mechanism was disabled or failed for some reason, you can 
+specify a delimiter manualy: execute command 'RainbowDelim' and a character under 
+the cursor would be used as the csv delimiter for columns highlighting.
+
+If you don't like default column colors, you can define your own.
+
+Commands:
+  :RainbowDelim - Manualy select csv delimiter under cursor and highlight columns in different colors
+  :NoRainbowDelim - Disable rainbow csv syntax for current buffer.
+
+For more info read a help file.

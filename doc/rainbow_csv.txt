@@ -1,0 +1,103 @@
+*rainbow_csv.txt*	For Vim version 7.3	Last change: 2013 May 24
+Author:  Dmitry Ignatovich  <mechatroner@yandex.ru>
+
+Rainbow CSV provides a way to highlight logical columns in different rainbow 
+colors. This helps to understand data patterns in csv, tsv, etc files more 
+quickly especially when fields in the same column have different lengths. 
+Every 10-th column has a default font color, so it's easy to find out column 
+numbers
+
+There are 2 ways to enable csv columns hithlighting:
+        1. CSV autodetection based on buffer content
+        2. Manual CSV delimiter selection
+
+When new buffer is opened Rainbow CSV analyzes it's content and tries to
+autodect whether it is a csv file or not; and if it is, what character this
+csv is delimited by. This would work only if no other syntax rules has been
+set for buffer. Buffer's file extension is irrelevant for autodetection, there
+can be no extension at all or buffer content can be read by vim from stdin -
+autodetection would work in any case.
+
+If autodetection mechanism was disabled or failed for some reason, you can 
+specify delimiter manualy: execute command |'RainbowDelim'| and character under 
+cursor would be used as csv delimiter for columns highlighting.
+
+If you don't like default column colors, you can define your own.
+
+===============================================================================
+1. Contents                                *rainbow_csv* *rainbow_csv-contents*
+
+    1. Contents	             |rainbow_csv-contents|
+    2. Configuration         |rainbow_csv-configuration|
+    3. Commands              |rainbow_csv-commands|
+
+===============================================================================
+                                                  *'rainbow_csv-configuration'*
+2. Configuration
+                                                            *'rcsv_delimiters'*
+'rcsv_delimiters'  list  (default: [	,] )
+                   global
+    By default plugin checks only TAB and comma characters when it analyzes 
+    buffer content, but you can specify your own set of autodetectable 
+    delimiters by defining a |'g:rcsv_delimiters'| list in your .vimrc
+
+    Example
+    (plugin would check TAB, semicolon, colon and whitespace on autodetect):
+>
+     let g:rcsv_delimiters = [	;: ]
+<
+
+                                             *'disable_rainbow_csv_autodetect'*
+'disable_rainbow_csv_autodetect'  boolean  (default: undefined)
+                                  global
+   If plugin csv autodetection feature gives to much false positives for you,
+   you can disable this mechanism by defining |'disable_rainbow_csv_autodetect'|
+   option in your .vimrc
+   Example:
+>
+     let g:disable_rainbow_csv_autodetect = 1
+<
+   You would be able to use manual csv delimiter selection still.
+
+                                                           *'rcsv_max_columns'*
+'rcsv_max_columns'  integer (default: 20)
+                    global
+   Autodetection would fail if buffer has more than rcsv_max_columns columns.
+   You can rise or lower this limit.
+   Example:
+>
+     let g:rcsv_max_columns = 30
+<
+   NOTE: setting rcsv_max_columns to a big value may slow down csv files
+   display
+
+                                                            *'rcsv_colorpairs'*
+'rcsv_delimiters'  list (default: see autoload/rainbow_csv.vim)
+                   global
+   If you don't like default column colors, you can define your own.
+   Example (1,6,11... columns are darkred, and every 5-th column have default 
+   font color)
+>
+     let g:rcsv_colorpairs = [
+         \ ['darkred',     'darkred'],
+         \ ['darkblue',    'darkblue'],
+         \ ['darkgreen',   'darkgreen'],
+         \ ['darkmagenta', 'darkmagenta'],
+         \ ['NONE',        'NONE'],
+         \ ]
+<
+
+===============================================================================
+                                                       *'rainbow_csv-commands'*
+3. Commands
+                                                                 *RainbowDelim*
+:RainbowDelim
+   This command will mark current file as csv and highlight columns in rainbow
+   colors, character under cursor will be used as a delimiter
+
+                                                               *NoRainbowDelim*
+:NoRainbowDelim
+   This command will disable rainbow columns highlighting for current file.
+   Usefull when autodection mechanism failed and marked non csv file as csv
+
+vim:tw=78:ts=8:ft=help
